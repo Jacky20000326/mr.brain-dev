@@ -13,7 +13,7 @@ const store = require("./routes/index").store
 const interactive = require("./routes/index").interactive
 const room = require("./models/roomModel")
 const authentication =  require("./config/passport")
-
+const SocketConnect = require("./socketIo");
 const port = process.env.PORT || 3002
 
 
@@ -51,71 +51,8 @@ app.use("/api/store",store)
 app.use('/api/passport',authentication)
 app.use('/api/room',room)
 
-io.on("connection", (socket) => {
-    console.log("connect socket server")
-    console.log("connect id is"+ socket.id)
 
-
-    // 裝o置連接socket通知
-    // io.emit("connectInfo","The device is connecting")
-    
-    //broadcast when user connect
-    // io.emit("message", "A user is connect")
-        // io.emit("get_msg", msg) 此為可以方送給所有user，也包含自己
-        // Run when is disconnect
-
-    //使用者離開通知
-    socket.on("disconnect",()=>{
-
-        io.emit("message","user have leave rom")
-        console.log("user is leaving")
-
-    }); 
-
-    // 創建房間
-    socket.on("create_room",()=>{
-        let room_id = Math.random().toString(36).slice(-8);
-        io.emit("connectroom",room_id)
-        room.createRoom(room_id,"616e65d649caf115bb78c345")
-        socket.join(room_id)
-        // 回傳房間密碼給host
-    })
-
-    // 進入房間
-    
-    socket.on("joinroom",(roomID)=>{
-        let clients = io.sockets.adapter.rooms[roomID]
-        room.findRoom(roomID,(Room)=>{
-            socket.join(Room)
-        })
-    })
-
-    // 得到host設定的時間
-    socket.on("setTime",(roomId,timer)=>{
-        room.findRoom(roomId,(Room)=>{
-            Room.setTime = timer
-            Room.save()
-            socket.join(roomId)
-            io.in(roomId).emit("getTime",timer)
-        })
-    })
-
-
-    socket.on("getTime",(roomId)=>{
-        room.findRoom(roomId,(Room)=>{
-            socket.join(roomId)
-            console.log(Room)
-            socket.emit("getTimer",Room.setTime)
-        })
-    })
-
-
-    socket.on("start",(isstart,roomId)=>{
-        console.log(isstart)
-        console.log(`roomId:${roomId}`)
-        io.in(roomId).emit("startStudy","isstart")
-        })
-    });
+SocketConnect(io)
 
 
 

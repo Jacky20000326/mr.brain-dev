@@ -75,7 +75,7 @@ Route.post("/log-in",(req,res)=>{
                         console.log("已登入")
                     }else{
                         res.send("password is not correct")
-                        console.log("你的密碼不正確喔！！")
+                        console.log("你的密碼不正確喔!!")
                     }
                 });
             }else{
@@ -100,6 +100,7 @@ Route.post("/save-name",(req,res)=>{
 
 
 Route.post("/getUserInfo",(req,res)=>{
+    
     user.findOne({"_id":req.body._id},(err,User)=>{
         if(err){
             console.log(err)
@@ -109,6 +110,17 @@ Route.post("/getUserInfo",(req,res)=>{
         }else{
             
             res.send(User)
+        }
+    })
+})
+
+// 取得所有會員資料
+Route.get("/cms/getUserInfo",(req,res)=>{
+    user.find({},(err,allUser)=>{
+        if(err){
+            console.log(err)
+        }else{
+            res.json(allUser)
         }
     })
 })

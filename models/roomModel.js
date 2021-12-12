@@ -18,6 +18,11 @@ const roomSchema = new mongoose.Schema({
     setTime:{
         type: String,
         require: true
+        // sec
+    },
+    isSuccess: {
+        type: Boolean,
+        require: true
     }
 })
 
@@ -35,16 +40,6 @@ roomSchema.statics.findRoom = function(id,callback){
     })
 }
 
-roomSchema.statics.createRoom = function(room_id,userId){
-    this.create({
-        roomId: room_id,
-        creator: userId
-    }).then(()=>{
-        console.log("save room id in db")
-    }).catch((err)=>{
-        console.log(err)
-    })
-}
 
 const Room = mongoose.model("Room",roomSchema)
 module.exports = Room

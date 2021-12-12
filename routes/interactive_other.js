@@ -27,6 +27,9 @@ Route.post("/makeFrinend",(req,res)=>{
     })
 })
 
+
+
+
 // delete friend
 Route.post("/deleteFriend",(req,res)=>{
     let { target_id,my_id } = req.body
@@ -67,11 +70,12 @@ Route.post("/find_all_friends",(req,res)=>{
                 console.log(User)
                 console.log("my friend")
             }
-        
         }
     }).populate("friend")
     
 })
+
+
 
 Route.get('/find_all_user',(req,res)=>{
     user.find({},(err,User)=>{

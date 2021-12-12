@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const study_Model = require("./studyModel")
+
 
 
 const userSchema = new mongoose.Schema({
@@ -22,10 +22,6 @@ const userSchema = new mongoose.Schema({
         type : mongoose.Types.ObjectId,
         ref: "User"
     }],
-    all_study_info: [{
-        type : mongoose.Types.ObjectId,
-        ref: study_Model
-    }],
     level: {
         type: String,
         require: true
@@ -39,7 +35,7 @@ const userSchema = new mongoose.Schema({
         require: true
     },
     Month_energy: {
-        type: String,
+        type: Number,
         require: true
     },
     Founding_time:{
@@ -63,7 +59,7 @@ userSchema.statics.findSameInfoIndb = function(user,callback){
 // make friend with other user
 userSchema.statics.findUser = function(userID,callback){
     this.findOne({"_id":userID},(err,otherUser)=>{
-        if(err){
+        if(err){ 
             console.log(err)
         }
         if(otherUser){

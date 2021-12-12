@@ -20,16 +20,12 @@ const studySchema = new mongoose.Schema({
     energy: {
         type: String,
         require: true
+    },
+    user:{
+        type: String,
+        require: true
     }
-    
-    
 })
-
-
-
-
-
-
 
 
 
