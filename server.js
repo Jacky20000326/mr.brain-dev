@@ -14,6 +14,7 @@ const interactive = require("./routes/index").interactive
 const room = require("./models/roomModel")
 const authentication =  require("./config/passport")
 const SocketConnect = require("./socketIo");
+const cors = require("cors");
 const port = process.env.PORT || 3002
 
 
@@ -44,6 +45,7 @@ mongoose.connect("mongodb+srv://778899:778899password@1014db.72drx.mongodb.net/m
 
 
 // middlewares
+app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use("/api/auth",AuthRoute)
 app.use("/api/interactive",interactive)
