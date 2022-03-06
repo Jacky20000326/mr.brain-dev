@@ -15,7 +15,7 @@ const room = require("./models/roomModel")
 const authentication =  require("./config/passport")
 const SocketConnect = require("./socketIo");
 const cors = require("cors");
-const port = process.env.PORT || 3002
+const port = process.env.PORT 
 
 
 // connect cosmos db
