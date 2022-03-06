@@ -80,7 +80,7 @@ Route.get("/find_all_users", (req, res) => {
 				return b.Month_energy - a.Month_energy;
 			});
 			console.log(User.length)
-			res.json({res:"success find all users",allUser:User});
+			res.send({res:"success find all users",allUser:User});
 		}
 	});
 });
